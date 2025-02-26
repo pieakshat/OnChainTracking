@@ -1,34 +1,29 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.28;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
+contract SupporterRanking {
+    mapping(address => uint256) public scores;
+    address public admin;
 
-contract Lock {
-    uint public unlockTime;
-    address payable public owner;
+    event ScoreUpdated(address indexed supporter, uint256 newScore);
 
-    event Withdrawal(uint amount, uint when);
-
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
-
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not authorized");
+        _;
     }
 
-    function withdraw() public {
-        // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+    constructor() {
+        admin = msg.sender;
+    }
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
-        require(msg.sender == owner, "You aren't the owner");
+    function updateScore(address supporter, uint256 newScore) external onlyAdmin {
+        scores[supporter] = newScore;
+        emit ScoreUpdated(supporter, newScore);
+    }
 
-        emit Withdrawal(address(this).balance, block.timestamp);
-
-        owner.transfer(address(this).balance);
+    function getScore(address supporter) external view returns (uint256) {
+        return scores[supporter];
     }
 }
+
+

@@ -10,7 +10,7 @@ contract OnchainLeaderboard is Ownable {
         bool isActive;
     }
 
-    mapping (address => uint256) public supporterScores;    // tracks score for each supporter
+    mapping (address => uint256) public supporterScores;    // tracks score for each supporter 
     mapping (bytes32 => Action) public actionWeights;   // every action will have it's own hash
     address[] public supporters; 
 
