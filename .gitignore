@@ -27,10 +27,29 @@ out/
 build/
 .vercel/
 dist/
+
+# Backend (Express/Fastify/NestJS) ignores
+/backend/node_modules/
+/backend/dist/
+backend/.env
+backend/.env.local
+backend/.env.development.local
+backend/.env.production.local
+backend/tmp/
+backend/logs/
+backend/.cache/
+
+# Prisma (if using)
+backend/prisma/migrations/
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
+
+# NestJS (if using)
+backend/.nestjs/
+
+# VSCode / JetBrains IDE / OS-specific ignores
 .vscode/
 .idea/
 *.swp
-
-# OS-specific ignores
 Thumbs.db
 desktop.ini
